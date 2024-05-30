@@ -26,24 +26,24 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">V2V: Efficiently Synthesizing Video Results for Video Queries</h1>
+            <h1 class="title is-1 publication-title">Guided Querying over Videos using Autocompletion Suggestions</h1>
             <div class="is-size-5 publication-authors">
               <span class="author-block">
-                <a href="https://dominik.win">Dominik Winecki</a>,</span>
+                <a href="https://scholar.google.com/citations?user=V3dA3rAAAAAJ&hl=ko">Hojin Yoo</a>,</span>
               <span class="author-block">
                 <a href="https://arnab.org">Arnab Nandi</a></span>
             </div>
 
             <div class="is-size-5 publication-authors">
               <span class="author-block">The Ohio State University</span>
-              <p class="author-block"><br/><em>To appear at <a href="https://icde2024.github.io/DEFT.html">ICDE 2024</a></em></p>
+              <p class="author-block"><br/><em>To appear at <a href="https://hilda.io/2024/">HILDA 2024</a></em></p>
             </div>
 
             <div class="column has-text-centered">
               <div class="publication-links">
                 <!-- PDF Link. -->
                 <span class="link-block">
-                  <a href="v2v-winecki-nandi-icde-2024.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://doi.org/10.1145/3665939.3665964" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fas fa-file-pdf"></i>
                     </span>
@@ -69,11 +69,11 @@
                 </span> -->
                 <!-- Code Link. -->
                 <span class="link-block">
-                  <a href="https://github.com/ixlab/v2v" class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://www.loom.com/share/237999c54e934d3a96d7d9b4c508fce8?sid=ee36f027-4068-4419-9ff8-b0eac9689160" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
-                      <i class="fab fa-github"></i>
+                      <i class="fas fa-file-video"></i>
                     </span>
-                    <span>Code</span>
+                    <span>Demo</span>
                   </a>
                 </span>
               </div>
@@ -89,11 +89,11 @@
     <div class="container is-max-desktop">
       <div class="hero-body">
         <video id="videoPlayer" width="100%" preload autoplay muted loop playsinline>
-          <source src="static/images/v2v_diagram.mp4" type="video/mp4" />
+          <source src="static/images/vidautocomplete-diagram.mp4" type="video/mp4" />
         </video>
 
         <!-- Safari will not autoplay a video tag if it's in low power mode. Here's the Apple-spesific workaround. -->
-        <img id="safariVideoPlayer" src="static/images/v2v_diagram.mp4" alt="" style="width: 100%; display: none;" />
+        <img id="safariVideoPlayer" src="static/images/vidautocomplete-diagram.mp4" alt="" style="width: 100%; display: none;" />
         <script>
           document.addEventListener('DOMContentLoaded', function () {
             var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -107,7 +107,7 @@
         </script>
 
         <h2 class="subtitle has-text-centered">
-          <em>V2V</em> efficiently synthesizes video results for video queries.
+          A system that autocompletes queries for retrieval of video content based on <em>zero-shot video understanding</em> enhances user interactivity.
         </h2>
       </div>
     </div>
@@ -120,27 +120,12 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              Querying video data has become increasingly popular and useful.
-              Video queries can be complex, ranging from retrieval tasks <em>("find me the top videos that
-                have...")</em>, to analytics <em>("how many videos contained object X per day?")</em>, to excerpting
-              tasks <em>("highlight and zoom into scenes with object X near object Y")</em>, or combinations thereof.
-            </p>
-            <p>
-              Results for video queries are still typically shown as either relational data or a primitive collection of
-              clickable thumbnails on a web page.
-              Presenting query results in this form is an impedance mismatch with the video medium: they are cumbersome
-              to skim through and are in a different modality and information density compared to the source data.
-              We describe <em><b>V2V</b></em>, a system to efficiently synthesize <em><b>video</b> results for video
-                queries</em>. V2V returns a fully-edited video, allowing the user to consume results in the same manner
-              as the source videos.
-            </p>
-            <p>
-              A key challenge is that synthesizing video results from a collection of videos is computationally
-              intensive, especially within interactive query response times.
-              To address this, V2V features a grammar to express video transformations in a declarative manner and a
-              heuristic optimizer that improves the efficiency of V2V processing in a manner similar to how databases
-              execute relational queries. Experiments show that our V2V optimizer enables video synthesis to run
-              3&times; faster.
+              A critical challenge with querying video data is that the user is often unaware of the contents of the video, its structure, and the exact terminology to use in the query.
+              While these problems exist in exploratory querying settings over traditional structured data, these problems are exacerbated for video data, where the information is sourced from human-annotated metadata or from computer vision models running over the video.
+              In the absence of any guidance, the human is at a loss for where to begin the query session, or how to construct the query.
+              Here, autocompletion-based user interfaces have become a popular and pervasive approach to interactive, keystroke-level query guidance.
+              To guide the user through the query construction process, we develop methods that combine Vision Language Models and Large Language Models for generating query suggestions that are amenable to autocompletion-based user interfaces.
+              Through quantitative assessments over real-world datasets, we demonstrate that our approach provides a meaningful benefit to query construction for video queries.
             </p>
           </div>
         </div>
@@ -153,59 +138,73 @@
 
       <div class="columns is-centered">
         <div class="column is-full-width">
-          <h2 class="title is-3">The V2V System</h2>
+          <h2 class="title is-3">The Video Query Suggestion System</h2>
 
-          <h3 class="title is-4">Specifications</h3>
+          <h3 class="title is-4">Traditional Video Database Management Systems (VDBMS) vs. Ours</h3>
+          <!-- I want to compare traditional video database management system and ours -->
+          <!-- recommend me template to show versus -->
+          <h4 class="title is-5">Traditional VDBMS</h6>
           <div class="content has-text-justified">
-            <p>
-              To return a video result for a video query, V2V creates a declarative specification from a relational
-              query:
-            </p>
-            <pre><code>Spec = &lt;TimeDomain, Render,
-          videos: {&quot;vid1&quot;: &quot;video1.mp4&quot;, ...},
-          data_arrays: {&quot;vid1_bb&quot;: &quot;annot1.json&quot;}&gt;
+            <ul>
+              <li>
+                <b>Limited Information Utilization:</b> Traditional VDBMS rely solely on the information provided by deep learning models. They can only analyze videos based on the features extracted by these models.
+              </li>
+              <li>
+                <b>Simple Analyses:</b> These systems are capable of basic analyses, such as identifying object locations and directions within videos.
+              </li>
+              <li>
+                <b>Inability for Complex Queries:</b> When faced with complex queries (e.g., finding a video of “a man unloading a truck”), traditional VDBMS may struggle to perform the task effectively.
+              </li>
+            </ul>
+          </div>
 
-TimeDomain = Range(0, 600, 1/30)  // The output video is 10 minutes at 30FPS
+          <h6 class="title is-6">vs.</h6>
 
-Render(t) = match t {
-  t in Range(0, 300, 1/30) => vid1[t],  // Take first 5 minutes from vid1
-  t in Range(300, 600, 1/30) =>  // Compose vid1-vid4 in a grid with other effects
-      Grid(
-          vid1[t + 13463/30],
-          Overlay(vid2[t], "overlay.png"),
-          Zoom(vid3[t], 10.0),
-          vid4[t + 9952/30]
-      )}</code></pre>
-            <p>
-              Data can also be included in the spesification by referencing data arrays.
-              For example, to draw bounding boxes on a video:
-            </p>
-            <pre><code>Render(t) = BoundingBox(vid1[t], vid1_bb[t])</code></pre>
+          <h4 class="title is-5">Autocompletion System using Vision Language Models</h6>
+          <div class="content has-text-justified">
+            <ul>
+              <li>
+                <b>Multimodal Capabilities:</b> By integrating Multimodal Large Language Models (MLLMs) like VLMs, the system gains the ability to process data from different modalities (e.g., text, images, videos). This allows for more comprehensive analysis.
+              </li>
+              <li>
+                <b>Behavior and State Analysis:</b> The proposed approach can analyze the behavior and state of objects within videos, providing a more detailed understanding of the video content.
+              </li>
+              <li>
+                <b>Refined Search Queries:</b> Integrating VLMs with VDBMS enables the system to refine and automatically complete user search queries, improving the overall search experience.
+              </li>
+            </ul>
           </div>
 
           <br />
 
-          <h2 class="title is-3">Optimization</h2>
-          <div class="content has-text-justified">
-            <p>
-              V2V features an optimizer that improves the efficiency of video synthesis.
-              It uses database-style optimization techniques, optimizing specs the same way a database optimizer
-              optimizes SQL queries.
-              When possible, V2V tries to reduce operations to stream copies, which do not require decoding and
-              encoding.
-            </p>
+          <h3 class="title is-4">Example</h2>
 
-            <img src="static/images/opt_plans.svg" alt="V2V Optimizer" style="width: 100%;" />
+          <div style="text-align: center;">
+            
+          </div>
+          <div class="content has-text-justified">
+            <img src="static/images/sample-prompt.png" alt="Sample prompt for autocompletion" 
+              style="display: block; margin: auto; width: 80%" />
+            <p style="font-size: 0.8em; text-align: center;">Sample prompt for autocompletion</p>
+            <p>
+              In the example above, if the user has typed part of a query, the system can suggest completions based on the context of the query. This feature helps users construct more accurate and relevant queries.
+            </p>
           </div>
 
-          <h2 class="title is-3">Performance</h2>
+          <br />
+
+          <h2 class="title is-3">Experiment</h2>
           <div class="content has-text-justified">
             <p>
-              Our optimizer improves the efficiency of V2V processing by 3&times; on average.
+              We conducted an experiment to evaluate the effectiveness of our <em>segmented search phrases</em> in improving the search experience. The experiment involved calculating the average minimal keystrokes (MKS) required to complete a search query using our system.
             </p>
-
-            <img src="static/images/plots.svg" alt="V2V Performance"
-              style="display: block; margin: auto; width: 80%;" />
+          <div class="content has-text-justified">
+            <img src="static/images/average-mks.png" alt="V2V Performance"
+              style="display: block; margin: auto; width: 60%;" />
+            <p style="font-size: 0.8em; text-align: center;">A distribuition of MKS when <em>k</em> = 10</p>
+            <p>
+              Our system requires on average <b>10 fewer inputs</b> to complete the desired search query, when suggesting up to 10 queries based on user input.
+            </p>
           </div>
         </div>
   </section>
@@ -214,12 +213,12 @@ Render(t) = match t {
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@inproceedings{winecki2024_v2v,
-        title        = {V2V: Efficiently Synthesizing Video Results for Video Queries},
-        author       = {Winecki, Dominik and Nandi, Arnab},
+      <!-- <pre><code>@inproceedings{yoo2024_guided,
+        title        = {Guided Querying over Videos using Autocompletion Suggestions},
+        author       = {Yoo, Hojin and Nandi, Arnab},
         year         = 2024,
-        booktitle    = {2024 IEEE 40th International Conference on Data Engineering (ICDE)}
-}</code></pre>
+        booktitle    = {2024 ACM SIGMOD/PODS Conference}
+}</code></pre> -->
     </div>
   </section>
 
@@ -228,11 +227,11 @@ Render(t) = match t {
       <div class="columns is-centered">
         <div class="column is-8">
           <div class="content">
-            <p>
+            <!-- <p>
               This material is based upon work supported by the National Science Foundation under Award No. 1910356. Any
               opinions, findings and conclusions or recommendations expressed in this material are those of the
               author(s) and do not necessarily reflect the views of the National Science Foundation.
-            </p>
+            </p> -->
             <p>
               This website is website adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>,
               licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
